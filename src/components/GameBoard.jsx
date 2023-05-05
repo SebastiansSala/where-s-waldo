@@ -1,9 +1,9 @@
 import React from "react";
 
-const Background = ({ setClickPosition, setShowMenu }) => {
+const GameBoard = ({ setClickPosition, setShowMenu, board}) => {
   return (
     <img
-      src="https://kfig21.github.io/photo_tagging_app/static/media/xbox.6c93b3fa.jpg"
+      src={board.img}
       className="w-full"
       onClick={(e) => {
         setClickPosition({ x: e.clientX, y: e.clientY });
@@ -13,4 +13,4 @@ const Background = ({ setClickPosition, setShowMenu }) => {
   );
 };
 
-export default Background;
+export default GameBoard;
