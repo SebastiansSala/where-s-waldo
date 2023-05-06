@@ -12,7 +12,7 @@ const RenderLevels = ({ setSelectedBoard }) => {
   };
 
   return (
-    <div className="flex gap-40 w-full mt-40 flex-wrap justify-center pb-20">
+    <div className="flex gap-x-40 gap-y-20 w-full mt-40 flex-wrap justify-center pb-20">
       {boards.map((board, index) => {
         return (
           <div
@@ -22,11 +22,17 @@ const RenderLevels = ({ setSelectedBoard }) => {
           >
             <img
               src={board.img}
-              className="w-full max-w-max h-60 object-cover"
+              className="w-full h-60 object-cover"
             ></img>
             <div className="flex justify-between p-4 max-w-">
               <p className="text-xl">Level {index + 1}</p>
-              <div>hola</div>
+              <div className="flex gap-4">
+                {board.target.map((item, index) => {
+                  return(
+                    <img src={item.img} className="w-5 object-cover" key={index}></img>
+                  )
+                })}
+              </div>
             </div>
           </div>
         );

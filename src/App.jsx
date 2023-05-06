@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Header from "./components/Header";
 import Home from "./components/Home";
 import GameBoard from "./components/GameBoard";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Leaderboard from "./components/Leaderboard";
 
 function App() {
   const [selectedBoard, setSelectedBoard] = useState(null);
@@ -10,7 +10,6 @@ function App() {
   return (
     <BrowserRouter>
       <div>
-        <Header></Header>
         <div className="container mx-auto flex justify-center">
           <Routes>
             <Route
@@ -24,6 +23,10 @@ function App() {
             <Route
               path="/gameboard"
               element={<GameBoard selectedBoard={selectedBoard} />}
+            />
+            <Route
+              path="/leaderboard"
+              element={<Leaderboard/>}
             />
           </Routes>
         </div>

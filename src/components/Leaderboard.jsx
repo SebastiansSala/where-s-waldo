@@ -1,10 +1,12 @@
 import React from "react";
+import Header from "./Header";
 
 const Leaderboard = () => {
   return (
-    <div>
+    <>
+      <Header/>
       <div></div>
-    </div>
+    </>
   );
 };
 
