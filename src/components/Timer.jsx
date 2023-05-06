@@ -9,7 +9,7 @@ const Timer = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return <p className="text-4xl">Timer: {duration} seconds</p>;
+  return <p className="text-xl lg:text-4xl">Timer: {duration} seconds</p>;
 };
 
 export default React.memo(Timer);

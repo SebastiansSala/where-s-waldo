@@ -9,8 +9,8 @@ const GameBoard = ({ selectedBoard }) => {
   const navigate = useNavigate();
 
   const handleBoardClick = (e) => {
-    setClickPosition({ x: e.clientX, y: e.clientY });
-    console.log(e.clientX, e.clientY);
+    setClickPosition({ x: e.pageX, y: e.pageY });
+    console.log(e.pageX, e.pageY);
     setShowMenu(true);
   };
 
@@ -24,7 +24,7 @@ const GameBoard = ({ selectedBoard }) => {
 
   return (
     <div>
-      <GameboardHeader selectedBoard={selectedBoard}/>
+      <GameboardHeader selectedBoard={selectedBoard} />
       <div className="mt-4 pb-4">
         <img
           src={selectedBoard.img}
@@ -32,8 +32,14 @@ const GameBoard = ({ selectedBoard }) => {
           onClick={(e) => {
             handleBoardClick(e);
           }}
-        ></img>
-        {showMenu && <Menu clickPosition={clickPosition} selectedBoard={selectedBoard}/>}
+        />
+        {showMenu && (
+          <Menu
+            clickPosition={clickPosition}
+            selectedBoard={selectedBoard}
+            setShowMenu={setShowMenu}
+          />
+        )}
       </div>
     </div>
   );

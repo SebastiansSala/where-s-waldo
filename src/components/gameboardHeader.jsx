@@ -10,9 +10,9 @@ const GameboardHeader = ({ selectedBoard }) => {
           <Link to="/">Home</Link>
         </li>
         <Timer />
-        <li className="text-xs xl:text-2xl text-white flex gap-10 px-1 xl:px-4 py-1 transition-all">
+        <li className="text-xs xl:text-2xl text-white flex gap-3 lg:gap-10 px-1 xl:px-4 py-1 transition-all">
           {selectedBoard.target.map((elem, index) => {
-            return <img src={elem.img} className="w-10 object-cover" key={index}/>;
+            return <img src={elem.img} className="w-5 lg:w-10 object-cover" key={index}/>;
           })}
         </li>
       </nav>
