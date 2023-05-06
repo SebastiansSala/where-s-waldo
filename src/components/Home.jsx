@@ -1,11 +1,10 @@
 import React from "react";
 import RenderLevels from "./Levels";
 
-const Home = () => {
-
+const Home = ({ setSelectedBoard }) => {
   return (
     <>
-      <RenderLevels></RenderLevels>
+      <RenderLevels setSelectedBoard={setSelectedBoard} />
     </>
   );
 };

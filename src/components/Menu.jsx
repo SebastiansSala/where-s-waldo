@@ -6,7 +6,11 @@ const Menu = ({ clickPosition }) => {
     left: clickPosition.x,
   };
 
-  return <div className="border absolute h-40 w-40" style={menuStyle}></div>;
+  return (
+    <div className="absolute h-20 w-20 bg-black/40 " style={menuStyle}>
+      <div>rast</div>
+    </div>
+  );
 };
 
 export default Menu;

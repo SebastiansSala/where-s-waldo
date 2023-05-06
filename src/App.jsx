@@ -5,18 +5,31 @@ import GameBoard from "./components/GameBoard";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 function App() {
+  const [selectedBoard, setSelectedBoard] = useState(null);
 
   return (
     <BrowserRouter>
-      <Header></Header>
-      <div className="container mx-auto flex justify-center">
-        <Routes>
-          <Route path="/" element={<Home></Home>}></Route>
-        
-        </Routes>
+      <div>
+        <Header></Header>
+        <div className="container mx-auto flex justify-center">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  setSelectedBoard={setSelectedBoard}
+                />
+              }
+            />
+            <Route
+              path="/gameboard"
+              element={<GameBoard selectedBoard={selectedBoard} />}
+            />
+          </Routes>
+        </div>
       </div>
     </BrowserRouter>
   );
 }
 
-export default App
+export default App;
