@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { boards } from "./Boards";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+import { app } from "../firebase";
 
-const RenderLevels = ({ setSelectedBoard }) => {
+const auth = getAuth(app);
+
+const RenderLevels = ({ setSelectedBoard, handleGoogleSignIn }) => {
   const navigate = useNavigate();
 
-  const handleLevel = (id) => {
+  const handleLevel = async (id) => {
+    if (!auth.currentUser) {
+      handleGoogleSignIn();
+      return;
+    }
     const level = boards.filter((board) => id === board.id);
     setSelectedBoard(level[0]);
     navigate("/gameboard");
@@ -20,17 +28,18 @@ const RenderLevels = ({ setSelectedBoard }) => {
             className="bg-white w-96 shadow hover:shadow-lg hover:cursor-pointer p-2 transition-all duration-300"
             onClick={() => handleLevel(index)}
           >
-            <img
-              src={board.img}
-              className="w-full h-60 object-cover"
-            ></img>
+            <img src={board.img} className="w-full h-60 object-cover"></img>
             <div className="flex justify-between p-4 max-w-">
               <p className="text-xl">Level {index + 1}</p>
               <div className="flex gap-4">
                 {board.target.map((item, index) => {
-                  return(
-                    <img src={item.img} className="w-5 object-cover" key={index}></img>
-                  )
+                  return (
+                    <img
+                      src={item.img}
+                      className="w-5 object-cover"
+                      key={index}
+                    ></img>
+                  );
                 })}
               </div>
             </div>

@@ -1,12 +1,11 @@
 import React from "react";
 import RenderLevels from "./Levels";
-import Header from "./Header";
 
-const Home = ({ setSelectedBoard }) => {
+const Home = ({ setSelectedBoard, currentUser, setCurrentUser, handleGoogleSignIn }) => {
+
   return (
     <>
-      <Header></Header>
-      <RenderLevels setSelectedBoard={setSelectedBoard} />
+      <RenderLevels setSelectedBoard={setSelectedBoard} handleGoogleSignIn={handleGoogleSignIn} setCurrentUser={setCurrentUser} currentUser={currentUser} />
     </>
   );
 };

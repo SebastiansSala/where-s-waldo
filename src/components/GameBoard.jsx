@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import Menu from "./menu";
 import { useNavigate } from "react-router-dom";
 import GameboardHeader from "./gameboardHeader";
+import { getAuth } from "firebase/auth";
+import { app } from "../firebase";
+
+const auth = getAuth(app);
 
 const GameBoard = ({ selectedBoard }) => {
   const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 });
@@ -15,7 +19,7 @@ const GameBoard = ({ selectedBoard }) => {
   };
 
   useEffect(() => {
-    if (!selectedBoard) {
+    if (!selectedBoard || !auth.currentUser) {
       navigate("/");
     }
   }, [selectedBoard]);
