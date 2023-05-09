@@ -1,46 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Menu = ({
   clickPosition,
   selectedBoard,
   setShowMenu,
-  querySnapshot,
   target,
-  setTargets,
+  handleCheck,
+  setWin
 }) => {
   const menuStyle = {
     top: clickPosition.y,
     left: clickPosition.x,
   };
 
-  const navigate = useNavigate();
-  const [win, setWin] = useState(false);
-
-  useEffect(() => {
+  const handleWin = () => {
     if (target.length === 0) {
       console.log("hola");
+      setShowMenu(false);
       setWin(true);
     }
-  }, [target]);
-
-  const handleCheck = (x, y, imgID) => {
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      const locationX = data.coordenateX;
-      const locationY = data.coordenateY;
-      if (
-        x >= locationX - 50 &&
-        x <= locationX + 50 &&
-        y >= locationY - 50 &&
-        y <= locationY + 50 &&
-        doc.id === imgID
-      ) {
-        console.log(`Acertaste ${data.name}`);
-        setTargets((prevTargets) => prevTargets.filter((id) => id !== imgID));
-      }
-    });
   };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    handleWin();
+  }, [target]);
 
   return (
     <div className="absolute bg-gray-100 rounded-md" style={menuStyle}>

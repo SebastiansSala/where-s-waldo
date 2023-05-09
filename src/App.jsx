@@ -51,7 +51,10 @@ function App() {
               path="/gameboard"
               element={<GameBoard selectedBoard={selectedBoard} />}
             />
-            <Route path="/leaderboard" element={<Leaderboard setCurrentUser={setCurrentUser}/>} />
+            <Route
+              path="/leaderboard"
+              element={<Leaderboard setCurrentUser={setCurrentUser} />}
+            />
           </Routes>
         </div>
       </div>

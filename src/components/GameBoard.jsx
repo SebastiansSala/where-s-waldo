@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Menu from "./menu";
+import Menu from "./Menu";
 import { useNavigate } from "react-router-dom";
-import GameboardHeader from "./gameboardHeader";
 import { getAuth } from "firebase/auth";
 import { app, firestore } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
+import Score from "./Score";
 
 const auth = getAuth(app);
 
@@ -13,6 +13,7 @@ const GameBoard = ({ selectedBoard }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [target, setTargets] = useState([]);
   const [querySnapshot, setQuerySnapshot] = useState([]);
+  const [win, setWin] = useState(false);
   const navigate = useNavigate();
 
   const handleBoardClick = (e) => {
@@ -23,16 +24,38 @@ const GameBoard = ({ selectedBoard }) => {
     setShowMenu(true);
   };
 
+  const handleCheck = (x, y, imgID) => {
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const locationX = data.coordenateX;
+      const locationY = data.coordenateY;
+      if (
+        x >= locationX - 50 &&
+        x <= locationX + 50 &&
+        y >= locationY - 50 &&
+        y <= locationY + 50 &&
+        doc.id === imgID
+      ) {
+        console.log(`Acertaste ${data.name}`);
+        setTargets((prevTargets) => prevTargets.filter((id) => id !== imgID));
+      }
+    });
+  };
+
   useEffect(() => {
     if (!selectedBoard || !auth.currentUser) {
       navigate("/");
       return;
     }
-    const fetchBoardData = async () => {
-      const querySnapshot = await getDocs(collection(firestore, "board1"));
-      setQuerySnapshot(querySnapshot);
+
+    const fetchQuerySnapshot = async () => {
+      const querySnapshotAssing = await getDocs(
+        collection(firestore, "board1")
+      );
+      setQuerySnapshot(querySnapshotAssing);
     };
-    fetchBoardData();
+    fetchQuerySnapshot();
+
     const targets = selectedBoard.target.map((elem) => elem.imgID);
     setTargets(targets);
   }, [selectedBoard]);
@@ -41,7 +64,6 @@ const GameBoard = ({ selectedBoard }) => {
 
   return (
     <div>
-      <GameboardHeader selectedBoard={selectedBoard} />
       <div className="mt-4 pb-4">
         <img
           src={selectedBoard.img}
@@ -55,12 +77,13 @@ const GameBoard = ({ selectedBoard }) => {
             clickPosition={clickPosition}
             selectedBoard={selectedBoard}
             setShowMenu={setShowMenu}
-            querySnapshot={querySnapshot}
             target={target}
-            setTargets={setTargets}
+            handleCheck={handleCheck}
+            setWin={setWin}
           />
         )}
       </div>
+      {win && <Score />}
     </div>
   );
 };
