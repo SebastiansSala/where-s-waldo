@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Home from "./components/Home";
 import GameBoard from "./components/GameBoard";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
@@ -14,34 +14,17 @@ function App() {
   const [selectedBoard, setSelectedBoard] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      setCurrentUser(user);
-    } else {
-      setCurrentUser(null);
-    }
-  });
-
   const handleGoogleSignIn = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
         const user = result.user;
         setCurrentUser(user);
       })
       .catch((error) => {
-        const errorCode = error.code;
         const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
         console.log(errorMessage);
       });
   };
-
-  useEffect(() => {
-    app;
-  }, []);
 
   return (
     <BrowserRouter>
@@ -50,14 +33,17 @@ function App() {
           <Header
             currentUser={currentUser}
             handleGoogleSignIn={handleGoogleSignIn}
+            setCurrentUser={setCurrentUser}
           ></Header>
           <Routes>
             <Route
               path="/"
+              exact
               element={
                 <Home
                   setSelectedBoard={setSelectedBoard}
                   handleGoogleSignIn={handleGoogleSignIn}
+                  setCurrentUser={setCurrentUser}
                 />
               }
             />
@@ -65,7 +51,7 @@ function App() {
               path="/gameboard"
               element={<GameBoard selectedBoard={selectedBoard} />}
             />
-            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/leaderboard" element={<Leaderboard setCurrentUser={setCurrentUser}/>} />
           </Routes>
         </div>
       </div>

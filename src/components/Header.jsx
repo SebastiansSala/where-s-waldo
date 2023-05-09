@@ -4,8 +4,16 @@ import { getAuth, signOut } from "firebase/auth";
 import { app } from "../firebase";
 
 const auth = getAuth(app);
-const Header = ({ currentUser, handleGoogleSignIn }) => {
+const Header = ({ currentUser, handleGoogleSignIn, setCurrentUser }) => {
   const location = useLocation();
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      setCurrentUser(user);
+    } else {
+      setCurrentUser(null);
+    }
+  });
 
   const signOutUser = () => {
     signOut(auth);

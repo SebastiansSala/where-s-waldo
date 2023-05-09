@@ -6,17 +6,26 @@ import { app } from "../firebase";
 
 const auth = getAuth(app);
 
-const RenderLevels = ({ setSelectedBoard, handleGoogleSignIn }) => {
+const RenderLevels = ({ setSelectedBoard, handleGoogleSignIn, setCurrentUser }) => {
   const navigate = useNavigate();
 
-  const handleLevel = async (id) => {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      setCurrentUser(user);
+    } else {
+      setCurrentUser(null);
+    }
+  });
+
+  const handleLevel = (id) => {
     if (!auth.currentUser) {
       handleGoogleSignIn();
       return;
+    } else {
+      const level = boards.filter((board) => id === board.id);
+      setSelectedBoard(level[0]);
+      navigate("/gameboard");
     }
-    const level = boards.filter((board) => id === board.id);
-    setSelectedBoard(level[0]);
-    navigate("/gameboard");
   };
 
   return (

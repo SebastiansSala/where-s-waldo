@@ -1,12 +1,11 @@
 import React from "react";
 import Header from "./Header";
 
-const Leaderboard = () => {
+const Leaderboard = ({setCurrentUser}) => {
   return (
-    <>
-      <Header/>
-      <div></div>
-    </>
+    <div>
+        
+    </div>
   );
 };
 
